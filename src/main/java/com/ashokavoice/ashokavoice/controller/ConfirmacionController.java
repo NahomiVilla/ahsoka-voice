@@ -14,21 +14,29 @@ import com.ashokavoice.ashokavoice.model.Users;
 import com.ashokavoice.ashokavoice.service.RegisterService;
 
 @RestController
-@RequestMapping("/register")
-public class RegisterController {
+@RequestMapping("/confirmar")
+public class ConfirmacionController {
 
     @Autowired
     private RegisterService registerService;
 
-    @PostMapping
-    public ResponseEntity<Registers> registrarUsuario(@RequestBody Registers registers) {
-        Registers registrado = registerService.registrarUsuario(registers);
-        return ResponseEntity.ok(registrado);
+    @PostMapping("/registrar")
+    public ResponseEntity<?> registrarUsuario(@RequestBody Registers registers) {
+        try {
+            Registers savedRegisters = registerService.registrarUsuario(registers);
+            return ResponseEntity.ok(savedRegisters);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/confirmar")
-    public ResponseEntity<Users> confirmarRegistro(@RequestParam String token) {
-        Users users = registerService.confirmarRegistro(token);
-        return ResponseEntity.ok(users);
+    public ResponseEntity<?> confirmarRegistro(@RequestParam String token) {
+        try {
+            Users savedUsers = registerService.confirmarRegistro(token);
+            return ResponseEntity.ok(savedUsers);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

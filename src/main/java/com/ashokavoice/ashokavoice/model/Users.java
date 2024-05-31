@@ -45,18 +45,22 @@ public class Users {
     @Column(nullable = false)
     private String contrasena;
 
+    @Column
+    private boolean confirmado;
+
     //COSTRUCTOS PREDETERMINADO
     public Users(){
 
     }
     //constructor con argumentos
-    public Users(String correo,String nombre,String nombreUsuario, Date fechaNacimiento, String fotoPerfil, String contrasena){
+    public Users(String correo,String nombre,String nombreUsuario, Date fechaNacimiento, String fotoPerfil, String contrasena,boolean confirmado){
         this.correo=correo;
         this.nombre=nombre;
         this.contrasena=contrasena;
         this.fechaNacimiento=fechaNacimiento;
         this.fotoPerfil=fotoPerfil;
         this.nombreUsuario=nombreUsuario;
+        this.confirmado=confirmado;
     }
     //METODOS getter y setter
 
@@ -74,6 +78,51 @@ public class Users {
         this.correo=correo;
     }
 
-    
+    public String getNombre(){
+        return nombre;
+    }
+
+    public void setNombre(String nombre){
+        this.nombre=nombre;
+    }
+
+    public String getContraseña(){
+        return contrasena;
+    }
+
+    public void setContraseña(String contrasena){
+        this.contrasena=contrasena;
+    }
+
+    public Date getFechaNacimiento(){
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento){
+        this.fechaNacimiento=fechaNacimiento;
+    }
+
+    public String getFotoPerfil(){
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil){
+        this.fotoPerfil=fotoPerfil;
+    }
+
+    public String getNombreUsuario(){
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario){
+        this.nombreUsuario=nombreUsuario;
+    }
+
+    public boolean getConfirmado(){
+        return confirmado;
+    }
+    public void setConfirmado(boolean confirmado){
+        this.confirmado=confirmado;
+    }
 
 }

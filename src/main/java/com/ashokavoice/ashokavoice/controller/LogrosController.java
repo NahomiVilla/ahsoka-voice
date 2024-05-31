@@ -1,18 +1,20 @@
 package com.ashokavoice.ashokavoice.controller;
 
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import com.ashokavoice.ashokavoice.model.Comments;
 import com.ashokavoice.ashokavoice.model.Logros;
+import com.ashokavoice.ashokavoice.service.CommentsService;
+import com.ashokavoice.ashokavoice.service.LikesService;
 import com.ashokavoice.ashokavoice.service.LogrosService;
 
 @RestController
@@ -20,24 +22,74 @@ import com.ashokavoice.ashokavoice.service.LogrosService;
 public class LogrosController {
     @Autowired
     private LogrosService logrosService;
+    @Autowired
+    private LikesService likesService;
 
-    @GetMapping
-    public List<Logros> getAllLogros(){
-        return logrosService.getAllLogros();
-    }
+    @Autowired
+    private CommentsService comentariosService;
 
-    @GetMapping("/{id}")
-    public Optional<Logros> getLogroById(@PathVariable Long id){
-        return logrosService.getLogrosById(id);
-    }
-
+    //crear logro
     @PostMapping
-    public Logros createLogros(@RequestBody Logros logros){
-        return logrosService.saveLogros(logros);
+    public ResponseEntity<Logros> crearLogro(@RequestBody Logros logros){
+        Logros nuevoLogros=logrosService.crearLogros(logros);
+        return ResponseEntity.ok(nuevoLogros);
     }
+    //lista.all
+    @GetMapping("/all/{users}")
+    public ResponseEntity<List<Map<String, Object>>> listarTodosMisLogros(@PathVariable Long idUsuario){
+        List<Logros> logros=logrosService.listarTodosMisLogros(idUsuario);
+        List<Map<String, Object>> logrosConDetalles = new ArrayList<>();
 
-    @DeleteMapping("/{id}")
-    public void deleteLogros(@PathVariable Long id){
-        logrosService.deleteLogros(id);
+        for (Logros logro : logros) {
+            int cantidadLikes = likesService.obtenerCantidadLikes(logro.getIdLogros());
+            List<Comments> comentarios = comentariosService.obtenerComentarioPorLogro(logro.getIdLogros());
+
+            Map<String, Object> logroConDetalles = new HashMap<>();
+            logroConDetalles.put("logro", logro);
+            logroConDetalles.put("likes", cantidadLikes);
+            logroConDetalles.put("comentarios", comentarios);
+
+            logrosConDetalles.add(logroConDetalles);
+        }
+        return ResponseEntity.ok(logrosConDetalles);
+    }
+    //lista.feed
+    @GetMapping("/feed/{users}")
+    public ResponseEntity<List<Map<String, Object>>> listarLogrosFeed(@PathVariable Long users){
+        List<Logros> logroFeed=logrosService.listarLogrosFeed(users);
+        List<Map<String, Object>> logrosFeedConDetalles = new ArrayList<>();
+
+        for (Logros logro : logroFeed) {
+            int cantidadLikes = likesService.obtenerCantidadLikes(logro.getIdLogros());
+            List<Comments> comentarios = comentariosService.obtenerComentarioPorLogro(logro.getIdLogros());
+
+            Map<String, Object> logroConDetalles = new HashMap<>();
+            logroConDetalles.put("logro", logro);
+            logroConDetalles.put("likes", cantidadLikes);
+            logroConDetalles.put("comentarios", comentarios);
+
+            logrosFeedConDetalles.add(logroConDetalles);
+        }
+        return ResponseEntity.ok(logrosFeedConDetalles);
+    }
+    //editar logro
+    @PutMapping("/{id_logro}")
+    public ResponseEntity<Logros> editarLogro(@PathVariable Long id_logro,@RequestBody Logros logros){
+        Optional<Logros> logroEditado=logrosService.editarLogro(id_logro, logros);
+        return logroEditado.map(ResponseEntity::ok).orElseGet(()-> ResponseEntity.notFound().build());
+    }
+    //eliminar logro
+    @DeleteMapping("/{id_logro}")
+    public ResponseEntity<Void> eliminarLogro(@PathVariable Long id_logro) {
+        if (logrosService.eliminarLogro(id_logro)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+    //ocultar logro
+    @PutMapping("/ocultar/{id_logro}")
+    public ResponseEntity<Logros> ocultarLogro(@PathVariable Long idLogro) {
+        Optional<Logros> logroOcultado = logrosService.ocultarLogro(idLogro);
+        return logroOcultado.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

@@ -53,7 +53,7 @@ public class Registers {
 
     @Column(nullable = false)
     private Integer tokenConfirmacion;
-    //COSTRUCTOS PREDETERMINADO
+    //CONSTRUCTOR PREDETERMINADO
     public Registers(){
 
     }
@@ -72,4 +72,83 @@ public class Registers {
     }
     //METODOS
 
+    public Long getIdRegistro(){
+        return idRegistro;
+    }
+
+    public void setIdRegistro(Long idRegistro){
+        this.idRegistro=idRegistro;
+    }
+
+    public String getCorreo(){
+        return correo;
+    }
+
+    public void setCorreo(String correo){
+        this.correo=correo;
+    }
+
+    public String getNombre(){
+        return nombre;
+    }
+    public void setNombre(String nombre){
+        this.nombre=nombre;
+    }
+
+    public String getContraseña(){
+        return contrasena;
+    }
+    public void setContraseña(String contrasena){
+        this.contrasena=contrasena;
+    }
+
+    public Date getFechaNacimiento(){
+        return fechaNacimiento;
+    }
+    public void setFechaNacimiento(Date fechaNacimiento){
+        this.fechaNacimiento=fechaNacimiento;
+    }
+    public String getFotoPerfil(){
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil){
+        this.fotoPerfil=fotoPerfil;
+    }
+
+    public String getNombreUsuario(){
+        return nombreUsuario;
+    }
+    public void setNombreUsuario(String nombreUsuario){
+        this.nombreUsuario=nombreUsuario;
+    }
+
+    public Date getFechaRegistro(){
+        return fechaRegistro;
+    }
+    public void setFechaRegistro(Date fechaRegistro){
+        this.fechaRegistro=fechaRegistro;
+    }
+
+    public String getIpRegistro(){
+        return ipRegistro;
+    }
+
+    public void setIpRegistro(String ipRegistro){
+        this.ipRegistro=ipRegistro;
+    }
+
+    public Integer getEdad(){
+        return edad;
+    }
+    public void setEdad(Integer edad){
+        this.edad=edad;
+    }
+
+    public Integer getTokenConfirmacion(){
+        return tokenConfirmacion;
+    }
+    public void setTokenConfirmacion(Integer tokenConfirmacion){
+        this.tokenConfirmacion=tokenConfirmacion;
+    }
 }

@@ -5,7 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.ashokavoice.ashokavoice.model.Comments;
 
+
+import java.util.List;
+
+
 @Repository
 public interface CommentsRepository extends JpaRepository<Comments,Long> {
-
+    List<Comments> findByIdLogros(Long logros);
 }

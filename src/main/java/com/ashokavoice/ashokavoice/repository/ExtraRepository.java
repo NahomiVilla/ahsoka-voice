@@ -9,3 +9,4 @@ import com.ashokavoice.ashokavoice.model.Extras;
 @Repository
 public interface ExtraRepository extends JpaRepository<Extras,Long>{
 }
+ 

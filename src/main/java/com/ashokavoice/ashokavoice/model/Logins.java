@@ -41,4 +41,31 @@ public class Logins {
     }
 
     //metodos
+    public Long getIdLogin(){
+        return id_login;
+    }
+    public void setIdLogin(Long id_login){
+        this.id_login=id_login;
+    }
+
+    public Users getUsers(){
+        return users;
+    }
+    public void setUsers(Users users){
+        this.users=users;
+    }
+
+    public String getPassword(){
+        return password;
+    }
+    public void setPassword(String password){
+        this.password=password;
+    }
+
+    public String getNombreUsuario(){
+        return nombre_usuario;
+    }
+    public void setNombreUsuario(String nombre_usuario){
+        this.nombre_usuario=nombre_usuario;
+    }
 }

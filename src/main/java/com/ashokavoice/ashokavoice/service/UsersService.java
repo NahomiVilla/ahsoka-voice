@@ -1,6 +1,5 @@
 package com.ashokavoice.ashokavoice.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +13,32 @@ public class UsersService {
     @Autowired
     private UsersRepository usersRepository;
  
-    public List<Users> getAllUsers(){
-        return usersRepository.findAll();
+    public Optional<Users> editarPerfil(Long idUsuario,Users nuevosDatos){
+        return usersRepository.findById(idUsuario).map(user -> {
+            user.setNombre(nuevosDatos.getNombre());
+            user.setNombreUsuario(nuevosDatos.getNombreUsuario());
+            return usersRepository.save(user);
+        });
     }
 
-    public Optional<Users> getUserId(Long id){
-        return usersRepository.findById(id);
+    public Optional<Users> editarContrasena(Long idUsuario,String nuevaContraseña){
+        return usersRepository.findById(idUsuario).map(user->{
+            user.setContraseña(nuevaContraseña);
+            return usersRepository.save(user);
+        });
     }
 
-    public Users saveUser(Users user){
-        return usersRepository.save(user);
+    public Optional<Users> actualizarFotoPerfil(Long idUsuario,String nuevaFoto){
+        return usersRepository.findById(idUsuario).map(usuario->{
+            usuario.setFotoPerfil(nuevaFoto);
+            return usersRepository.save(usuario);
+        });
     }
 
-    public void deleteUser(Long id){
-        usersRepository.deleteById(id);
+    public boolean eliminarCuenta(Long idUsuario){
+        return usersRepository.findById(idUsuario).map(usuario->{
+            usersRepository.delete(usuario);
+            return true;
+        }).orElse(false);
     }
 }

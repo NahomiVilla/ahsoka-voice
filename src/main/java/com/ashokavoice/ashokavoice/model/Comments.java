@@ -24,11 +24,11 @@ public class Comments {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario",nullable=false)
-    private Users users;
+    private Long users;
 
     @ManyToOne
     @JoinColumn(name = "id_logro",nullable=false)
-    private Logros logros;
+    private Long logros;
 
     @Column(name = "comentario")
     private String comentario;
@@ -39,12 +39,38 @@ public class Comments {
     }
 
     //constructor con argumentos
-    public Comments(Users users,Logros logros,String comentario){
+    public Comments(Long users,Long logros,String comentario){
         this.users=users;
         this.logros=logros;
         this.comentario=comentario;
     }
 
     //METODOS
-    
+    public Long getIdComentario(){
+        return id_comment;
+    }
+    public void setIdComentario(Long id_comment){
+        this.id_comment=id_comment;
+    }
+
+    public Long getUsers(){
+        return users;
+    }
+    public void setUsers(Long users){
+        this.users=users;
+    }
+
+    public Long getLogros(){
+        return logros;
+    }
+    public void setLogros(Long logros){
+        this.logros=logros;
+    }
+
+    public String getComentario(){
+        return comentario;
+    }
+    public void setComentario(String comentario){
+        this.comentario=comentario;
+    }
 }

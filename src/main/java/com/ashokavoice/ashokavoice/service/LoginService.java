@@ -1,33 +1,28 @@
 package com.ashokavoice.ashokavoice.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ashokavoice.ashokavoice.model.Logins;
-import com.ashokavoice.ashokavoice.repository.LoginRepository;
+import com.ashokavoice.ashokavoice.model.Users;
+import com.ashokavoice.ashokavoice.repository.UsersRepository;
 
 @Service
 public class LoginService {
+ 
+    @Autowired
+    private UsersRepository usersRepository;
 
     @Autowired
-    private LoginRepository loginRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public List<Logins> getAllLogins() {
-        return loginRepository.findAll();
-    }
-
-    public Optional<Logins> getLoginById(Long id) {
-        return loginRepository.findById(id);
-    }
-
-    public Logins saveLogin(Logins login) {
-        return loginRepository.save(login);
-    }
-
-    public void deleteLogin(Long id) {
-        loginRepository.deleteById(id);
+    public Optional<Users> validarUsuario(String nombreUsuario, String contraseña) {
+        Optional<Users> user = usersRepository.findByNombreUsuario(nombreUsuario);
+        if (user.isPresent() && passwordEncoder.matches(contraseña, user.get().getContraseña())) {
+            return user;
+        }
+        return Optional.empty();
     }
 }

@@ -1,10 +1,10 @@
 package com.ashokavoice.ashokavoice.service;
 
-import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ashokavoice.ashokavoice.model.Likes;
 import com.ashokavoice.ashokavoice.repository.LikesRepository;
@@ -13,19 +13,29 @@ import com.ashokavoice.ashokavoice.repository.LikesRepository;
 public class LikesService {
     @Autowired
     private LikesRepository likesRepository;
-    public List<Likes> getAllLikes(){
-        return likesRepository.findAll();
+    //agregar 
+    @Transactional
+    public void agregarLike(Long idLogro,Long idUsuario){
+        if (likesRepository.existsByIdLogroAndIdUsuario(idLogro,idUsuario)){
+            throw new IllegalArgumentException("Ya has dado like a este logro");
+
+        }
+        Likes like=new Likes();
+        like.setLogros(idLogro);
+        like.setUsers(idUsuario);
+        likesRepository.save(like);
     }
 
-    public Optional<Likes> getLikesById(Long id){
-        return likesRepository.findById(id);
+
+    //eliminar()
+    @Transactional
+    public void eliminarLike(Long idLogro,Long idUsuario){
+        Likes like =likesRepository.findByIdLogroAndIdUsuario(idLogro, idUsuario).orElseThrow(()->new IllegalArgumentException("no has dado like a este logro"));
+        likesRepository.delete(like);
     }
 
-    public Likes savLikes(Likes likes){
-        return likesRepository.save(likes);
-    }
-
-    public void deleteLikes(Long id){
-        likesRepository.deleteById(id);
+    //visualizar
+    public int obtenerCantidadLikes(Long idLogro){
+        return likesRepository.countByIdLogro(idLogro);
     }
 }

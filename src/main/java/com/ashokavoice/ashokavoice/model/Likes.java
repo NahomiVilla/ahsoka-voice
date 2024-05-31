@@ -24,11 +24,13 @@ public class Likes {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario",nullable=false)
-    private Users users;
+    private Long users;
 
     @ManyToOne
     @JoinColumn(name ="id_logro",nullable=false)
-    private Logros logros;
+    private Long logros;
+
+    //numero de likes??
 
     //constructor predeterminado
     public Likes(){
@@ -36,11 +38,30 @@ public class Likes {
     }
 
     //constructor con argumentos
-    public Likes(Users users,Logros logros){
+    public Likes(Long users,Long logros){
         this.users=users;
         this.logros=logros;
     }
 
     //METODOS
-    
+    public Long getIdLike(){
+        return id_like;
+    }
+    public void setIdLike(Long id_like){
+        this.id_like=id_like;
+    } 
+
+    public Long getUsers(){
+        return users;
+    }
+    public void setUsers(Long users){
+        this.users=users;
+    }
+
+    public Long getLogros(){
+        return logros;
+    }
+    public void setLogros(Long logros){
+        this.logros=logros;
+    }
 }

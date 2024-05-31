@@ -25,14 +25,29 @@ public class Extras {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    private Users users;
+    private Long users;
 
 
     public Extras(){
 
     }
-    public Extras(Users users){
+    public Extras(Long users){
         this.users=users;
 
+    }
+
+    //METODOS
+    public Long getIdExtra(){
+        return id_extra;
+    }
+    public void setIdExtra(Long id_extra){
+        this.id_extra=id_extra;
+    }
+
+    public Long getUsers(){
+        return users;
+    }
+    public void setUsers(Long users){
+        this.users=users;
     }
 }

@@ -1,14 +1,13 @@
 package com.ashokavoice.ashokavoice.controller;
 
 import com.ashokavoice.ashokavoice.model.Users;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,23 +20,29 @@ public class UsersController {
     @Autowired
     private UsersService usersService;
 
-    @GetMapping
-    public List<Users> getAllUsers(){
-        return usersService.getAllUsers();
+    @PutMapping("/editarPerfil/{idUsuario}")
+    public ResponseEntity<Users> editarPerfil(@PathVariable Long idUsuario, @RequestBody Users users) {
+        Optional<Users> usuarioEditado = usersService.editarPerfil(idUsuario, users);
+        return usuarioEditado.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/{id}")
-    public Optional<Users> getUserId(@PathVariable Long id){
-        return usersService.getUserId(id);
+    @PutMapping("/editarContrasena/{idUsuario}")
+    public ResponseEntity<Users> editarContrasena(@PathVariable Long idUsuario, @RequestBody String nuevaContrasena) {
+        Optional<Users> usuarioEditado = usersService.editarContrasena(idUsuario, nuevaContrasena);
+        return usuarioEditado.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public Users createUser(@RequestBody Users user){
-        return usersService.saveUser(user);
+    @PutMapping("/fotoPerfil/{idUsuario}")
+    public ResponseEntity<Users> actualizarFotoPerfil(@PathVariable Long idUsuario, @RequestBody String nuevaFotoPerfil) {
+        Optional<Users> usuarioEditado = usersService.actualizarFotoPerfil(idUsuario, nuevaFotoPerfil);
+        return usuarioEditado.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id){
-        usersService.deleteUser(id);
+    @DeleteMapping("/eliminarCuenta/{idUsuario}")
+    public ResponseEntity<Void> eliminarCuenta(@PathVariable Long idUsuario) {
+        if (usersService.eliminarCuenta(idUsuario)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
