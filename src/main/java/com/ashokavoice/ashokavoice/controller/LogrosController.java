@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ashokavoice.ashokavoice.model.Comments;
 import com.ashokavoice.ashokavoice.model.Logros;
+import com.ashokavoice.ashokavoice.model.Users;
 import com.ashokavoice.ashokavoice.service.CommentsService;
 import com.ashokavoice.ashokavoice.service.LikesService;
 import com.ashokavoice.ashokavoice.service.LogrosService;
@@ -36,8 +37,8 @@ public class LogrosController {
     }
     //lista.all
     @GetMapping("/all/{users}")
-    public ResponseEntity<List<Map<String, Object>>> listarTodosMisLogros(@PathVariable Long idUsuario){
-        List<Logros> logros=logrosService.listarTodosMisLogros(idUsuario);
+    public ResponseEntity<List<Map<String, Object>>> listarTodosMisLogros(@PathVariable Users users){
+        List<Logros> logros=logrosService.listarTodosMisLogros(users);
         List<Map<String, Object>> logrosConDetalles = new ArrayList<>();
 
         for (Logros logro : logros) {
@@ -55,7 +56,7 @@ public class LogrosController {
     }
     //lista.feed
     @GetMapping("/feed/{users}")
-    public ResponseEntity<List<Map<String, Object>>> listarLogrosFeed(@PathVariable Long users){
+    public ResponseEntity<List<Map<String, Object>>> listarLogrosFeed(@PathVariable Users users){
         List<Logros> logroFeed=logrosService.listarLogrosFeed(users);
         List<Map<String, Object>> logrosFeedConDetalles = new ArrayList<>();
 

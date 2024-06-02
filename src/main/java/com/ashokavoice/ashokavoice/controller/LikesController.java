@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ashokavoice.ashokavoice.model.Logros;
+import com.ashokavoice.ashokavoice.model.Users;
 import com.ashokavoice.ashokavoice.service.LikesService;
 
 @RestController
@@ -19,9 +21,9 @@ public class LikesController {
     private LikesService likesService;
 
     @PostMapping("/agregar")
-    public ResponseEntity<?> agregarLike(@RequestParam Long idLogro,@RequestParam Long idUsuario){
+    public ResponseEntity<?> agregarLike(@RequestParam Logros logros,@RequestParam Users users){
         try{
-            likesService.agregarLike(idLogro, idUsuario);
+            likesService.agregarLike(logros, users);
             return ResponseEntity.ok("like agregado exitosamente");
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -29,18 +31,18 @@ public class LikesController {
     }
 
     @DeleteMapping("/eliminar")
-    public ResponseEntity<?> eliminarLike(@RequestParam Long idLogro,@RequestParam Long idUsuario){
+    public ResponseEntity<?> eliminarLike(@RequestParam Logros logros,@RequestParam Users users){
         try{
-            likesService.eliminarLike(idLogro, idUsuario);
+            likesService.eliminarLike(logros, users);
             return ResponseEntity.ok("like eliminado con exito");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     @GetMapping("/visualizar")
-    public ResponseEntity<?> visualizarLikes(@RequestParam Long idLogro) {
+    public ResponseEntity<?> visualizarLikes(@RequestParam Long logrosId) {
         try {
-            int cantidadLikes = likesService.obtenerCantidadLikes(idLogro);
+            int cantidadLikes = likesService.obtenerCantidadLikes(logrosId);
             return ResponseEntity.ok(cantidadLikes);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

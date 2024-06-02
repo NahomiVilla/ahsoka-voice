@@ -1,6 +1,7 @@
 package com.ashokavoice.ashokavoice.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Transient;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -24,7 +26,7 @@ public class Logros {
 
     @Id
     @GeneratedValue(strategy =GenerationType.IDENTITY)
-    private Long idLogro;
+    private Long idLogros;
 
     @Column(nullable = false,unique = true)
     private String titulo;
@@ -44,19 +46,25 @@ public class Logros {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario",nullable=false)
-    private Long users;
+    private Users users;
 
     @Column(nullable = false)
     private boolean oculto;
 
     @Transient
     private long likes;
+
+    @OneToMany(mappedBy = "logros")
+    private List<Comments> comentarios;
+    @OneToMany(mappedBy = "logros")
+    private List<Likes> like;
+
     //constructor predeterminado
     public Logros(){
 
     }
     //constructor con argumentos
-    public Logros(String titulo,Date fecha, String area,String descripcion,String imagen,Long users,boolean oculto,long likes){
+    public Logros(String titulo,List<Likes> like,Date fecha, String area,String descripcion,List<Comments> comentarios,String imagen,Users users,boolean oculto,long likes){
         this.titulo=titulo;
         this.area=area;
         this.descripcion=descripcion;
@@ -65,16 +73,18 @@ public class Logros {
         this.users=users;
         this.oculto=oculto;
         this.likes=likes;
+        this.comentarios=comentarios;
+        this.like=like;
     }
 
     //Metodos
 
     public Long getIdLogros(){
-        return idLogro;
+        return idLogros;
     }
 
-    public void setIdLogros(Long idLogro){
-        this.idLogro=idLogro;
+    public void setIdLogros(Long idLogros){
+        this.idLogros=idLogros;
     }
 
     public String getTitulo(){
@@ -112,10 +122,10 @@ public class Logros {
         this.imagen=imagen;
     }
 
-    public Long getUsers(){
+    public Users getUsers(){
         return users;
     }
-    public void setUsers(Long users){
+    public void setUsers(Users users){
         this.users=users;
     }
 
@@ -132,6 +142,18 @@ public class Logros {
     public void setLikes(long likes){
         this.likes=likes;
     }
+    public List<Comments> getComentarios() {
+        return comentarios;
+    }
 
+    public void setComentarios(List<Comments> comentarios) {
+        this.comentarios = comentarios;
+    }
 
+    public List<Likes> getLike(){
+        return like;
+    }
+    public void setLike(List<Likes> like){
+        this.like=like;
+    }
 }

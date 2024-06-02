@@ -27,7 +27,7 @@ public class RegisterController {
     }
 
     @GetMapping("/confirmar")
-    public ResponseEntity<Users> confirmarRegistro(@RequestParam String token) {
+    public ResponseEntity<Users> confirmarRegistro(@RequestParam Integer token) {
         Users users = registerService.confirmarRegistro(token);
         return ResponseEntity.ok(users);
     }

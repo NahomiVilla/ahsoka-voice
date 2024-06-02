@@ -10,6 +10,6 @@ import com.ashokavoice.ashokavoice.model.Registers;
 @Repository
 public interface RegisterRepository  extends JpaRepository<Registers,Long>{
 
-    Optional<Registers> findByTokenConfirmacion(String tokenConfirmacion);
+    Optional<Registers> findByTokenConfirmacion(Integer tokenConfirmacion);
     
 }

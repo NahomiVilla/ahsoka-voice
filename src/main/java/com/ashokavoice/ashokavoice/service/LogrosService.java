@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ashokavoice.ashokavoice.model.Logros;
+import com.ashokavoice.ashokavoice.model.Users;
 import com.ashokavoice.ashokavoice.repository.LikesRepository;
 import com.ashokavoice.ashokavoice.repository.LogrosRepository;
 
@@ -26,22 +27,22 @@ public class LogrosService {
         return logrosRepository.save(logros);
     }
 
-    public List<Logros> listarTodosMisLogros(Long users){
+    public List<Logros> listarTodosMisLogros(Users users){
         List<Logros> logro = logrosRepository.findByUsers(users);
         for (Logros logros : logro) {
-            logros.setLikes(likesRepository.countByIdLogro(logros.getIdLogros()));
+            logros.setLikes(likesRepository.countByLogros_IdLogros(logros.getIdLogros()));
         }
         return logro;
     }
 
-    public List<Logros> listarLogrosFeed(Long users){
+    public List<Logros> listarLogrosFeed(Users users){
         List<Logros> todosLogros=logrosRepository.findByUsers(users);
         if (todosLogros.isEmpty()){
             return new ArrayList<>();
         }
         Random random=new Random();
         Logros logroAleatorio=todosLogros.get(random.nextInt(todosLogros.size()));
-        logroAleatorio.setLikes(likesRepository.countByIdLogro(logroAleatorio.getIdLogros()));
+        logroAleatorio.setLikes(likesRepository.countByLogros_IdLogros(logroAleatorio.getIdLogros()));
         //logros aleatorios de de otros usuarios
         List<Logros> otrosLogrosAleatorios=logrosRepository.findAll().stream().filter(logros -> !logros.getUsers().equals(users)).collect(Collectors.toList());
 

@@ -15,7 +15,7 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void enviarCorreoConfirmacion(String correo,String token){
+    public void enviarCorreoConfirmacion(String correo,Integer token){
         String asunto="confirmacion de cuenta";
         String cuerpo="Tu codigo de confirmacion es: "+token;
         try{

@@ -13,22 +13,23 @@ import jakarta.persistence.UniqueConstraint;
 @Entity
 @Table(name ="likes",
     uniqueConstraints = 
-        @UniqueConstraint(columnNames = {"id_like"})
+        @UniqueConstraint(columnNames = {"idLike"})
 )
 
 public class Likes {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Long id_like;
+    @Column(name = "idLike", nullable = false)
+    private Long idLikes;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario",nullable=false)
-    private Long users;
+    private Users users;
 
     @ManyToOne
     @JoinColumn(name ="id_logro",nullable=false)
-    private Long logros;
+    private Logros logros;
 
     //numero de likes??
 
@@ -38,30 +39,36 @@ public class Likes {
     }
 
     //constructor con argumentos
-    public Likes(Long users,Long logros){
+    public Likes(Users users,Logros logros){
         this.users=users;
         this.logros=logros;
     }
 
     //METODOS
     public Long getIdLike(){
-        return id_like;
+        return idLikes;
     }
-    public void setIdLike(Long id_like){
-        this.id_like=id_like;
+    public void setIdLike(Long idLikes){
+        this.idLikes=idLikes;
     } 
 
-    public Long getUsers(){
+    public Users getUsers(){
         return users;
     }
-    public void setUsers(Long users){
+    public void setUsers(Users users){
         this.users=users;
     }
 
-    public Long getLogros(){
+    public Logros getLogros(){
         return logros;
     }
-    public void setLogros(Long logros){
+    public void setLogros(Logros logros){
         this.logros=logros;
+    }
+    public Long getIdLogro() {
+        return logros != null ? logros.getIdLogros() : null;
+    }
+    public Long getIdUsuario() {
+        return users != null ? users.getIdUsuario() : null;
     }
 }

@@ -25,13 +25,13 @@ public class Extras {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    private Long users;
+    private Users users;
 
 
     public Extras(){
 
     }
-    public Extras(Long users){
+    public Extras(Users users){
         this.users=users;
 
     }
@@ -44,10 +44,10 @@ public class Extras {
         this.id_extra=id_extra;
     }
 
-    public Long getUsers(){
+    public Users getUsers(){
         return users;
     }
-    public void setUsers(Long users){
+    public void setUsers(Users users){
         this.users=users;
     }
 }

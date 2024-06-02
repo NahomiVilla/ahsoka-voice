@@ -28,7 +28,7 @@ public class RegisterService {
 
     @Autowired
     private EmailService emailService;
-    private Map<Long,String> tokens=new HashMap<>();//almacena temporalmente los tokens
+    private Map<Long,Integer> tokens=new HashMap<>();//almacena temporalmente los tokens
 
     @Transactional
     public Registers registrarUsuario(Registers registers){
@@ -39,7 +39,7 @@ public class RegisterService {
         //guardad los datos del registro
         Registers savedRegisters=registerRepository.save(registers);
         //Generar token de confirmacion 
-        String token=generarToken();
+        Integer token=generarToken();
         //guardad el token junto con el id del registro temporalmente
         tokens.put(savedRegisters.getIdRegistro(), token);
         //enviar el correo electronico de confirmacion
@@ -49,12 +49,12 @@ public class RegisterService {
     }
 
     @Transactional
-    public Users confirmarRegistro(String tokenConfrimacion){
+    public Users confirmarRegistro(Integer tokenConfrimacion){
         //buscar el registro de usuario por token de confirmacion
         Registers registers=registerRepository.findByTokenConfirmacion(tokenConfrimacion).orElseThrow(()-> new IllegalArgumentException("Token de confirmacion invalido"));
 
         //Verficar que el token coincida
-        String storedToken=tokens.get(registers.getIdRegistro());
+        Integer storedToken=tokens.get(registers.getIdRegistro());
         if(storedToken==null||!storedToken.equals(tokenConfrimacion)){
             throw new IllegalArgumentException("Token de confirmacion invalido");
         }
@@ -77,10 +77,9 @@ public class RegisterService {
         return savedUsers;
     }
 
-    private String generarToken(){
+    private Integer generarToken(){
         SecureRandom random=new SecureRandom();
-        int number= random.nextInt(1000000);
-        return String.format("%06d", number);
+        return random.nextInt(1000000);
     }
 
     private int calcularEdad(Date fechaNacimiento){

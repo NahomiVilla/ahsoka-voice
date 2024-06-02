@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ashokavoice.ashokavoice.model.Users;
 import com.ashokavoice.ashokavoice.service.ExtrasService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,10 +20,10 @@ public class ExtrasController {
     private ExtrasService extrasService;
 
     // Descargar datos
-    @GetMapping("/download/{idUsuario}")
-    public void descargarDatos(@PathVariable Long idUsuario, HttpServletResponse response) throws IOException {
+    @GetMapping("/download/{users}")
+    public void descargarDatos(@PathVariable Users users, HttpServletResponse response) throws IOException {
         response.setContentType("Mis_Logros/csv");
         response.setHeader("Content-Disposition", "attachment; filename=\"logros.csv\"");
-        extrasService.writeLogrosToCsv(response.getWriter(), idUsuario);
+        extrasService.writeLogrosToCsv(response.getWriter(), users);
     }
 }
