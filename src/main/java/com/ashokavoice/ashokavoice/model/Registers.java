@@ -8,8 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
@@ -32,11 +31,10 @@ public class Registers {
     private String nombreUsuario;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
+    
     private Date fechaNacimiento;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
     private Date fechaRegistro;
 
     @Column(nullable = false)
@@ -51,7 +49,7 @@ public class Registers {
     @Column(nullable = false)
     private Integer edad;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private Integer tokenConfirmacion;
     //CONSTRUCTOR PREDETERMINADO
     public Registers(){
@@ -95,10 +93,10 @@ public class Registers {
         this.nombre=nombre;
     }
 
-    public String getContraseña(){
+    public String getContrasena(){
         return contrasena;
     }
-    public void setContraseña(String contrasena){
+    public void setContrasena(String contrasena){
         this.contrasena=contrasena;
     }
 

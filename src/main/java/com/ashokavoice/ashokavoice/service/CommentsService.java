@@ -1,7 +1,7 @@
 package com.ashokavoice.ashokavoice.service;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +46,8 @@ public class CommentsService {
         commentsRepository.delete(comment);
     }
 
-    public List<Comments> obtenerComentarioPorLogro(Long idLogro) {
-        return commentsRepository.findByLogros_IdLogros(idLogro);
+    public List<String> obtenerComentarioPorLogro(Long idLogro) {
+        List<Comments>comentarios=commentsRepository.findByLogros_IdLogros(idLogro);
+        return comentarios.stream().map(Comments::getComentario).collect(Collectors.toList());
     }
 }

@@ -5,6 +5,10 @@ import java.util.List;
 
 import org.springframework.data.annotation.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +30,7 @@ public class Logros {
 
     @Id
     @GeneratedValue(strategy =GenerationType.IDENTITY)
+    @Column(name = "id_logros", nullable = false)
     private Long idLogros;
 
     @Column(nullable = false,unique = true)
@@ -55,8 +60,10 @@ public class Logros {
     private long likes;
 
     @OneToMany(mappedBy = "logros")
+    @JsonIgnore
     private List<Comments> comentarios;
     @OneToMany(mappedBy = "logros")
+    @JsonIgnore
     private List<Likes> like;
 
     //constructor predeterminado
@@ -122,11 +129,14 @@ public class Logros {
         this.imagen=imagen;
     }
 
-    public Users getUsers(){
-        return users;
+    public Long getUsers(){
+        return users != null ? users.getIdUsuario() : null;
     }
-    public void setUsers(Users users){
-        this.users=users;
+    public void setUsers(Long users){
+        if (this.users == null) {
+            this.users = new Users();
+        }
+        this.users.setIdUsuario(users);
     }
 
     public boolean getOculto(){

@@ -20,7 +20,7 @@ public class Likes {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idLike", nullable = false)
+    @Column(name = "id_likes", nullable = false)
     private Long idLikes;
 
     @ManyToOne
@@ -28,7 +28,7 @@ public class Likes {
     private Users users;
 
     @ManyToOne
-    @JoinColumn(name ="id_logro",nullable=false)
+    @JoinColumn(name ="id_logros",nullable=false)
     private Logros logros;
 
     //numero de likes??

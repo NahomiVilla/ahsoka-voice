@@ -3,6 +3,8 @@ package com.ashokavoice.ashokavoice.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -51,6 +53,7 @@ public class Users {
     private boolean confirmado;
 
     @OneToMany(mappedBy = "users")
+    @JsonIgnore
     private List<Comments> comentarios;
     @OneToMany(mappedBy = "users")
     private List<Likes> likes;
@@ -104,11 +107,11 @@ public class Users {
         this.nombre=nombre;
     }
 
-    public String getContraseña(){
+    public String getContrasena(){
         return contrasena;
     }
 
-    public void setContraseña(String contrasena){
+    public void setContrasena(String contrasena){
         this.contrasena=contrasena;
     }
 

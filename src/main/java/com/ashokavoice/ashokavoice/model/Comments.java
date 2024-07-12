@@ -1,5 +1,7 @@
 package com.ashokavoice.ashokavoice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,14 +22,16 @@ public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long id_comment;
+    private Long id_comentario;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario",nullable=false)
+    @JsonIgnore
     private Users users;
 
     @ManyToOne
     @JoinColumn(name = "id_logro",nullable=false)
+    @JsonIgnore
     private Logros logros;
 
     @Column(name = "comentario")
@@ -47,10 +51,10 @@ public class Comments {
 
     //METODOS
     public Long getIdComentario(){
-        return id_comment;
+        return id_comentario;
     }
-    public void setIdComentario(Long id_comment){
-        this.id_comment=id_comment;
+    public void setIdComentario(Long id_comentario){
+        this.id_comentario=id_comentario;
     }
 
     public Users getUsers(){

@@ -20,9 +20,12 @@
 	</properties>
 	<!-- Dependencias -->
 	<dependencies>
-
-		
-
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>3.0.0-RC1</version>
+		</dependency>
+	
 		<!-- Starter para Spring Data JPA -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -55,6 +58,12 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.7.3</version>
 			<scope>runtime</scope> <!-- O la versión más reciente disponible -->
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
 		</dependency>
 		<!--dependency>
 			<groupId>com.h2database</groupId>
