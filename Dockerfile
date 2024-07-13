@@ -1,10 +1,10 @@
-#FROM maven:3.8.5-openjdk-21 AS build
+FROM maven:3.9.6-openjdk-21 AS build
 
-#COPY . .
+COPY . .
 
-#RUN mvn install -DskipTests
+RUN mvn install -DskipTests
 
-FROM openjdk:21-alpine-jdk
+FROM openjdk:21-jdk
 
 COPY --from=build target/ashokavoice-0.0.1-SNAPSHOT.jar app.jar
 
