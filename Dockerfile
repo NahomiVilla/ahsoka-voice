@@ -4,8 +4,8 @@ COPY . .
 
 RUN mvn install -DskipTests
 
-FROM openjdk:17-alpine
+FROM openjdk:21-alpine-jdk
 
-COPY --from=build target/ashokavoice-0.0.1-SNAPSHOT.jar java-app.jar
+COPY --from=build target/ashokavoice-0.0.1-SNAPSHOT.jar app.jar
 
-ENTRYPOINT ["java","-jar","java-app.jar"]
+ENTRYPOINT ["java","-jar","/app.jar"]
